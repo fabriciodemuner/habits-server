@@ -1,19 +1,19 @@
 import React, { useState } from 'react';
 import AddHabit from './AddHabit';
 import './App.css';
-import HabitGrid from './HabitGrid';
+import HabitsGrid from './HabitsGrid';
 import Header from './Header';
 
 function App() {
   const [rows, setRows] = useState([
-    {num: Math.floor(10*Math.random())},
-    {num: Math.floor(10*Math.random())}
+    {id: 1, name: 'First Habit', streak: 5, check: true},
+    {id: 2, name: 'Second Habit', streak: 5, check: true}
   ]);
 
   return (
     <div>
       <Header />
-      <HabitGrid rows={rows} />
+      <HabitsGrid rows={rows} setRows={setRows} />
       <AddHabit rows={rows} setRows={setRows}/>
     </div>
   );

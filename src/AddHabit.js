@@ -10,7 +10,12 @@ export default function AddHabit(props) {
 
     function handleNewHabit() {
         if (value) {
-            setRows(rows.concat({num: Math.floor(10*Math.random()), name: value}));
+            setRows(rows.concat({
+                id: rows[rows.length-1].id + 1,
+                streak: 0,
+                name: value,
+                check: false
+            }));
             setValue('');
         }
     }
@@ -18,7 +23,7 @@ export default function AddHabit(props) {
     return (
         <div>
             <input type='text' value={value} onChange={e => setValue(e.target.value)}></input>
-            <button onClick={handleNewHabit}>New Habit</button>
+            <button onClick={handleNewHabit}>Add Habit</button>
         </div>
     )
 }
