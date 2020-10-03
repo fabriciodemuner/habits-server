@@ -22,19 +22,21 @@ export class HabitService {
     async listHabits(): Promise<HabitResponseDto[]> {
         // const habits = await this.habitRepo.find({ order: { id: 'ASC' } });
         // return plainToClass(HabitResponseDto, habits, { enableImplicitConversion: true });
-        const date = new Date()
-        return [{
-            id: 1,
-            name: 'test',
-            streak: 3,
-            createdAt: date,
-            updatedAt: date
-        }];
+        const date = new Date();
+        return [
+            {
+                id: 1,
+                name: 'test',
+                streak: 3,
+                createdAt: date,
+                updatedAt: date,
+            },
+        ];
     }
 
     async updateHabit(dto: UpdateHabitRequestDto): Promise<HabitResponseDto> {
         // const habit = await this.habitRepo.findOne(dto.id);
-        const date = new Date()
+        const date = new Date();
         const habits: {
             id: number;
             name: string;
@@ -45,23 +47,23 @@ export class HabitService {
                 id: 1,
                 name: 'name',
                 description: 'description',
-                updatedAt: date
+                updatedAt: date,
             },
             {
                 id: 2,
                 name: 'name',
                 description: 'description',
-                updatedAt: date
+                updatedAt: date,
             },
             {
                 id: 3,
                 name: 'name',
                 description: 'description',
-                updatedAt: date
-            }
-        ]
-        const index = Math.floor(Math.random() * 4)
-        const habit = habits[index]
+                updatedAt: date,
+            },
+        ];
+        const index = Math.floor(Math.random() * 4);
+        const habit = habits[index];
         if (!habit) {
             throw new NotFoundException();
         }
@@ -75,7 +77,7 @@ export class HabitService {
 
     async deleteHabit(habitId: number): Promise<boolean> {
         // const habit = await this.habitRepo.findOne(habitId);
-        const date = new Date()
+        const date = new Date();
         const habits: {
             id: number;
             name: string;
@@ -86,28 +88,28 @@ export class HabitService {
                 id: 1,
                 name: 'name',
                 description: 'description',
-                updatedAt: date
+                updatedAt: date,
             },
             {
                 id: 2,
                 name: 'name',
                 description: 'description',
-                updatedAt: date
+                updatedAt: date,
             },
             {
                 id: 3,
                 name: 'name',
                 description: 'description',
-                updatedAt: date
-            }
-        ]
-        const index = Math.floor(Math.random() * 4)
-        const habit = habits[index]
+                updatedAt: date,
+            },
+        ];
+        const index = Math.floor(Math.random() * 4);
+        const habit = habits[index];
         if (!habit) {
             throw new NotFoundException();
         }
         // await this.habitRepo.delete(habitId);
-        console.log(habitId)
+        console.log(habitId);
         return true;
     }
 }

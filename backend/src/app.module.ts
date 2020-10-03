@@ -9,10 +9,10 @@ import { AppController } from './app.controller';
 // import * as ormconfig from './db/custom-ormconfig';
 
 @Module({
-  imports: [],
-  // imports: [TypeOrmModule.forRoot(ormconfig as any)],
-  controllers: [AppController, HabitController],
-  providers: [AppRepo, HabitService],
-  // providers: [...repoProviders([Habit]), AppRepo, HabitService],
+    imports: [],
+    // imports: [TypeOrmModule.forRoot(ormconfig as any)],
+    controllers: [AppController, HabitController],
+    providers: [AppRepo, HabitService],
+    // providers: [...repoProviders([Habit]), AppRepo, HabitService],
 })
 export class AppModule {}
