@@ -17,7 +17,7 @@ module.exports = {
     maxQueryExecutionTime: db.maxQueryExecutionTime,
     entities: ['src/**/**.entity{.ts,.js}'],
     // js extension is important because we run compiled files in prod
-    migrations: ['src/db/migration/*{.ts,.js}'],
+    migrations: ['src/db/migration/**/*{.ts,.js}'],
     cli: {
         migrationsDir: 'src/db/migration',
     },

@@ -11,11 +11,11 @@ export class Habit {
     @Column()
     description: string;
 
-    @Column({ type: 'integer' })
+    @Column({ type: 'integer', default: 0 })
     streak: number;
 
-    @Column()
-    days: Date[];
+    // @Column()
+    // days: Date[];
 
     @CreateDateColumn()
     createdAt: Date;

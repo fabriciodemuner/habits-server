@@ -13,7 +13,7 @@ module.exports = {
         port: 5432,
         username: 'postgres',
         password: 'postgres',
-        database: 'habits-db',
+        database: 'habits-tracker-db',
         maxQueryExecutionTime: null,
     },
     server: {

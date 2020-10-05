@@ -9,7 +9,7 @@ export class HabitController {
     constructor(private habitService: HabitService) {}
 
     @Post()
-    async addHabit(@Body() dto: CreateHabitRequestDto): Promise<HabitResponseDto> {
+    async createHabit(@Body() dto: CreateHabitRequestDto): Promise<HabitResponseDto> {
         return await this.habitService.createHabit(dto);
     }
 
