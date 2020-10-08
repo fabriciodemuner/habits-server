@@ -11,8 +11,8 @@ module.exports = {
     db: {
         host: 'localhost',
         port: 5432,
-        username: 'postgres',
-        password: 'postgres',
+        username: 'pguser',
+        password: 'pgpass',
         database: 'habits-tracker-db',
         maxQueryExecutionTime: null,
     },
