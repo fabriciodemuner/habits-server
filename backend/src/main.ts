@@ -1,10 +1,11 @@
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
-import { NestExpressApplication } from '@nestjs/platform-express/interfaces/nest-express-application.interface';
+import { ExpressAdapter, NestExpressApplication } from '@nestjs/platform-express';
 import { AppExceptionFilter } from 'common/app-exception-filter';
 import { DtoPipe } from 'common/dto-pipe.pipe';
 import * as config from 'config';
 import { AppModule } from './app.module';
+import * as express from 'express';
 
 export async function configureApp(app: NestExpressApplication) {
     // CORS
@@ -27,8 +28,13 @@ export async function configureApp(app: NestExpressApplication) {
     await app.listenAsync(port, '0.0.0.0');
 }
 
-async function bootstrap() {
-    const app = await NestFactory.create(AppModule);
-    await app.listen(4000);
+export const bootstrap = async () => {
+    const server = express();
+    const app = (await NestFactory.create(AppModule, new ExpressAdapter(server))) as NestExpressApplication;
+    await configureApp(app);
+    return app;
+};
+
+if (require.main === module) {
+    bootstrap();
 }
-bootstrap();
