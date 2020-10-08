@@ -14,8 +14,8 @@ export class Habit {
     @Column({ type: 'integer', default: 0 })
     streak: number;
 
-    // @Column()
-    // days: Date[];
+    @Column({ type: 'json', default: [] })
+    days: Date[];
 
     @CreateDateColumn()
     createdAt: Date;
