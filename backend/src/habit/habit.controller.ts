@@ -1,6 +1,7 @@
 import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { CreateHabitRequestDto } from './dto/create-habit-request.dto';
 import { HabitResponseDto } from './dto/habit-response.dto';
+import { UpdateDaysRequestDto } from './dto/update-days-request.dto';
 import { UpdateHabitRequestDto } from './dto/update-habit-request.dto';
 import { HabitService } from './habit.service';
 
@@ -19,12 +20,17 @@ export class HabitController {
     }
 
     @Put(':id')
-    async updateHabit(@Param('id') prodId: number, @Body() dto: UpdateHabitRequestDto): Promise<HabitResponseDto> {
-        return await this.habitService.updateHabit({ id: prodId, ...dto });
+    async updateHabit(@Param('id') id: number, @Body() dto: UpdateHabitRequestDto): Promise<HabitResponseDto> {
+        return await this.habitService.updateHabit({ id, ...dto });
+    }
+
+    @Put(':id/days')
+    async updateDays(@Param('id') id: number, @Body() dto: UpdateDaysRequestDto): Promise<HabitResponseDto> {
+        return await this.habitService.updateDays({ id, ...dto });
     }
 
     @Delete(':id')
-    async deleteHabit(@Param('id') prodId: number): Promise<boolean> {
-        return await this.habitService.deleteHabit(prodId);
+    async deleteHabit(@Param('id') id: number): Promise<boolean> {
+        return await this.habitService.deleteHabit(id);
     }
 }

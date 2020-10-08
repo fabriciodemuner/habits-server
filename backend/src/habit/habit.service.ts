@@ -3,6 +3,7 @@ import { plainToClass } from 'class-transformer';
 import { AppRepo, InjectRepo } from '../common/app.repo';
 import { CreateHabitRequestDto } from './dto/create-habit-request.dto';
 import { HabitResponseDto } from './dto/habit-response.dto';
+import { UpdateDaysRequestDto } from './dto/update-days-request.dto';
 import { UpdateHabitRequestDto } from './dto/update-habit-request.dto';
 import { Habit } from './habit.entity';
 
@@ -31,6 +32,24 @@ export class HabitService {
         }
         habit.name = dto.name || habit.name;
         habit.description = dto.description || habit.description;
+        habit.updatedAt = new Date();
+        await this.habitRepo.save(habit);
+        return plainToClass(HabitResponseDto, habit);
+    }
+
+    async updateDays(dto: UpdateDaysRequestDto): Promise<HabitResponseDto> {
+        const habit = await this.habitRepo.findOne(dto.id);
+        if (!habit) {
+            throw new NotFoundException();
+        }
+        const index = habit.days.findIndex(d => d === dto.date);
+        if (index >= 0) {
+            habit.days.splice(index, 1);
+        } else {
+            habit.days.push(dto.date);
+        }
+        habit.days.sort();
+        habit.streak = habit.days.length;
         habit.updatedAt = new Date();
         await this.habitRepo.save(habit);
         return plainToClass(HabitResponseDto, habit);
