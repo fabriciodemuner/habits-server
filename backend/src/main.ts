@@ -1,8 +1,8 @@
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { ExpressAdapter, NestExpressApplication } from '@nestjs/platform-express';
-import { AppExceptionFilter } from 'common/app-exception-filter';
-import { DtoPipe } from 'common/dto-pipe.pipe';
+import { AppExceptionFilter } from './common/app-exception-filter';
+import { DtoPipe } from './common/dto-pipe.pipe';
 import * as config from 'config';
 import { AppModule } from './app.module';
 import * as express from 'express';
