@@ -7,6 +7,12 @@ import { UpdateDaysRequestDto } from './dto/update-days-request.dto';
 import { UpdateHabitRequestDto } from './dto/update-habit-request.dto';
 import { Habit } from './habit.entity';
 
+function newUTCDate(): Date {
+    // console.log(new Date(JSON.stringify(new Date()).slice(1, -2)))
+    // console.log(new Date(new Date().toUTCString().substr(0, 25)))
+    return new Date(JSON.stringify(new Date()).slice(1, -2));
+}
+
 @Injectable()
 export class HabitService {
     constructor(@InjectRepo(Habit) private habitRepo: AppRepo<Habit>) {}
@@ -32,7 +38,7 @@ export class HabitService {
         }
         habit.name = dto.name || habit.name;
         habit.description = dto.description || habit.description;
-        habit.updatedAt = new Date();
+        habit.updatedAt = newUTCDate();
         await this.habitRepo.save(habit);
         return plainToClass(HabitResponseDto, habit);
     }
@@ -50,7 +56,7 @@ export class HabitService {
         }
         habit.days.sort();
         habit.streak = habit.days.length;
-        habit.updatedAt = new Date();
+        habit.updatedAt = newUTCDate();
         await this.habitRepo.save(habit);
         return plainToClass(HabitResponseDto, habit);
     }
