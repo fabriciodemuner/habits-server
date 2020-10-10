@@ -1,34 +1,26 @@
 import React from "react";
+import Axios from "axios";
+import { API_HOST } from "./constants";
 
+const del = Axios.delete;
 export default function HabitRow(props) {
-  const { id, name, streak, check, rows, setRows } = props;
+  const { id, name, streak, onChange } = props;
 
-  function handleCheck() {
-    const index = rows.findIndex((row) => row.id === id);
-    rows[index] = { id, name, streak, check: !check };
-    setRows([...rows]);
+  async function handleDelete() {
+    try {
+      await del(`${API_HOST}/habit/${id}`);
+      onChange();
+    } catch (err) {
+      console.log(err);
+    }
   }
-
-  // function handleCheck() {
-  //     const modifiedRow = {id, name, streak, check: !check}
-  //     const index = rows.findIndex(row => row.id === id)
-  //     rows.splice(index, 1, modifiedRow)
-  //     setRows([...rows])
-  // }
-
-  // function handleCheck() {
-  //     const modifiedRow = {id, name, streak, check: !check}
-  //     const index = rows.findIndex(row => row.id === id)
-  //     const rest = rows.slice(index+1)
-  //     setRows(rows.slice(0, index).concat(modifiedRow).concat(rest))
-  // }
 
   return (
     <div>
       <p>
-        Name: {name}. Streak: {streak}. Today: {check ? "Done!" : "Do it!"}
+        Name: {name}. Streak: {streak}.
       </p>
-      <button onClick={handleCheck}>Toggle Habit</button>
+      <button onClick={handleDelete}>Delete Habit</button>
     </div>
   );
 }

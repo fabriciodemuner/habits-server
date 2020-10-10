@@ -1,27 +1,38 @@
 import React, { useState } from "react";
+import Axios from "axios";
+import { API_HOST } from "./constants";
 
+const post = Axios.post;
 export default function AddHabit(props) {
-  const { rows, setRows } = props;
+  const { onChange } = props;
 
-  const [value, setValue] = useState("");
+  async function addHabit() {
+    try {
+      await post(`${API_HOST}/habit`, {
+        name: nameValue,
+        description: descriptionValue,
+      });
+      onChange();
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  const [nameValue, setName] = useState("");
+  const [descriptionValue, setDesc] = useState("");
 
   function handleNewHabit() {
-    if (value) {
-      setRows(
-        rows.concat({
-          id: rows[rows.length - 1].id + 1,
-          streak: 0,
-          name: value,
-          check: false,
-        })
-      );
-      setValue("");
+    if (nameValue && descriptionValue) {
+      addHabit();
+      setName("");
+      setDesc("");
     }
   }
 
   return (
     <div>
-      <input type="text" value={value} onChange={(e) => setValue(e.target.value)}></input>
+      <input type="text" value={nameValue} onChange={(e) => setName(e.target.value)}></input>
+      <input type="text" value={descriptionValue} onChange={(e) => setDesc(e.target.value)}></input>
       <button onClick={handleNewHabit}>Add Habit</button>
     </div>
   );
