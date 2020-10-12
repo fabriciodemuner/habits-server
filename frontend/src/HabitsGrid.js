@@ -7,14 +7,7 @@ export default function HabitsGrid(props) {
   return (
     <div>
       {rows.map((row) => (
-        <HabitRow
-          key={row.id}
-          id={row.id}
-          name={row.name}
-          streak={row.streak}
-          check={row.check}
-          onChange={onChange}
-        />
+        <HabitRow key={row.id} row={row} onChange={onChange} />
       ))}
     </div>
   );

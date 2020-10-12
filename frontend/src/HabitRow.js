@@ -4,11 +4,11 @@ import { API_HOST } from "./constants";
 
 const del = Axios.delete;
 export default function HabitRow(props) {
-  const { id, name, streak, onChange } = props;
+  const { row, onChange } = props;
 
   async function handleDelete() {
     try {
-      await del(`${API_HOST}/habit/${id}`);
+      await del(`${API_HOST}/habit/${row.id}`);
       onChange();
     } catch (err) {
       console.log(err);
@@ -18,7 +18,7 @@ export default function HabitRow(props) {
   return (
     <div>
       <p>
-        Name: {name}. Streak: {streak}.
+        Name: {row.name}. Streak: {row.streak}.
       </p>
       <button onClick={handleDelete}>Delete Habit</button>
     </div>
