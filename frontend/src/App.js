@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import AddHabit from "./AddHabit";
 import "./App.css";
+import AddHabit from "./AddHabit";
 import HabitsGrid from "./HabitsGrid";
 import Header from "./Header";
 import Axios from "axios";
@@ -10,6 +10,7 @@ const get = Axios.get;
 function App() {
   const [loading, setLoading] = useState(true);
   const [rows, setRows] = useState(null);
+  const [add, setAdd] = useState(false);
 
   useEffect(() => {
     getHabits();
@@ -25,11 +26,18 @@ function App() {
     }
   }
 
+  const gridDiv = loading ? <p>Loading...</p> : <HabitsGrid rows={rows} onChange={getHabits} />;
+  const addDiv = add ? (
+    <AddHabit onChange={getHabits} setAdd={setAdd} />
+  ) : (
+    <button onClick={() => setAdd(true)}>Add Habit</button>
+  );
+
   return (
     <div>
       <Header />
-      {loading ? <p>Loading...</p> : <HabitsGrid rows={rows} onChange={getHabits} />}
-      <AddHabit onChange={getHabits} />
+      {gridDiv}
+      {addDiv}
     </div>
   );
 }
