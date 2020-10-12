@@ -9,6 +9,9 @@ export class HabitResponseDto {
     name: string;
 
     @Expose()
+    description: string;
+
+    @Expose()
     streak: number;
 
     @Expose()

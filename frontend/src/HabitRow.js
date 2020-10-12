@@ -1,22 +1,14 @@
 import React, { useState } from "react";
 import Axios from "axios";
 import { API_HOST } from "./constants";
+import EditHabit from "./EditHabit";
 
-const del = Axios.delete;
 const put = Axios.put;
 export default function HabitRow(props) {
   const { row, onChange } = props;
   const today = JSON.stringify(new Date()).slice(1, 11);
   const [date, setDate] = useState(today);
-
-  async function handleDelete() {
-    try {
-      await del(`${API_HOST}/habit/${row.id}`);
-      onChange();
-    } catch (err) {
-      console.log(err);
-    }
-  }
+  const [edit, setEdit] = useState(false);
 
   async function toggleDate() {
     try {
@@ -28,12 +20,16 @@ export default function HabitRow(props) {
     }
   }
 
+  if (edit) {
+    return <EditHabit row={row} onChange={onChange} setEdit={setEdit} />;
+  }
+
   return (
     <div>
       <p>
         Name: {row.name}. Streak: {row.streak}.
       </p>
-      <button onClick={handleDelete}>Delete Habit</button>
+      <button onClick={() => setEdit(true)}>Edit Habit</button>
       <input type="date" value={date} onChange={(e) => setDate(e.target.value)}></input>
       <button onClick={toggleDate}>Toggle Date</button>
     </div>
