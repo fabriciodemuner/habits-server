@@ -9,22 +9,26 @@ export default function AddHabit(props) {
   const [descriptionValue, setDesc] = useState("");
   const [validInputs, setValidInputs] = useState(true);
 
-  async function handleNewHabit() {
-    if (nameValue && descriptionValue) {
-      try {
-        await post(`${API_HOST}/habit`, {
-          name: nameValue,
-          description: descriptionValue,
-        });
-        setName("");
-        setDesc("");
-        setAdd(false);
-        onChange();
-      } catch (err) {
-        console.log(err);
-      }
-    } else {
+  async function handleNewHabit(option) {
+    if (option === "cancel") {
+      setAdd(false);
+      return;
+    }
+    if (!nameValue || !descriptionValue) {
       setValidInputs(false);
+      return;
+    }
+    try {
+      await post(`${API_HOST}/habit`, {
+        name: nameValue,
+        description: descriptionValue,
+      });
+      setName("");
+      setDesc("");
+      setAdd(false);
+      onChange();
+    } catch (err) {
+      console.log(err);
     }
   }
 
@@ -41,6 +45,7 @@ export default function AddHabit(props) {
       <input type="text" value={nameValue} onChange={(e) => setName(e.target.value)}></input>
       <input type="text" value={descriptionValue} onChange={(e) => setDesc(e.target.value)}></input>
       <button onClick={handleNewHabit}>Save Habit</button>
+      <button onClick={() => handleNewHabit("cancel")}>Cancel</button>
       {invalidInputMessage}
     </div>
   );
