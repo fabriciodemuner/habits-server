@@ -1,7 +1,7 @@
 ## Habits Tracker
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app) and [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+[Node.js](https://nodejs.org/en/) server with [Nest](https://github.com/nestjs/nest).
+[PostgreSQL](https://www.postgresql.org/) server with [TypeORM](https://typeorm.io/).
 
-### [Frontend](https://github.com/fabriciodemuner/habits-tracker/tree/master/frontend)
+### [Frontend](https://github.com/fabriciodemuner/habits-client)
 
-### [Backend](https://github.com/fabriciodemuner/habits-tracker/tree/master/backend)

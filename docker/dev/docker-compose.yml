@@ -13,7 +13,7 @@ services:
 
   backend:
     build:
-      context: ../../backend
+      context: ../../
     depends_on:
       - db
     network_mode: "host"
