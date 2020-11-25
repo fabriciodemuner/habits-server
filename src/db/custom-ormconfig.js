@@ -1,5 +1,5 @@
 const db = require('config').db;
-
+console.log('------------ db:', db);
 const OrmNamingStrategy = require('./orm-naming-strategy').OrmNamingStrategy;
 
 module.exports = {
@@ -10,6 +10,7 @@ module.exports = {
     port: db.port,
     username: db.username,
     password: db.password,
+    url: db.url,
     database: db.database,
     synchronize: true,
     migrationsRun: true,
