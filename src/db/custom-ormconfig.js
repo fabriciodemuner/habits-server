@@ -1,5 +1,4 @@
 const db = require('config').db;
-console.log('------------------ db:', db);
 
 const OrmNamingStrategy = require('./orm-naming-strategy').OrmNamingStrategy;
 

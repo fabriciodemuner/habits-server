@@ -1,5 +1,4 @@
 const env = process.env.NODE_ENV || 'development';
-console.log(env);
 const port = process.env.PORT || 4000;
 
 const development = {
@@ -46,7 +45,5 @@ const config = {
     production,
     test,
 };
-
-console.log(config[env]);
 
 module.exports = config[env];
