@@ -43,6 +43,7 @@ const test = {
 
 const config = {
     development,
+    production,
     test,
 };
 
