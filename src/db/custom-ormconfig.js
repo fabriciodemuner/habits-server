@@ -1,6 +1,7 @@
 const db = require('config').db;
+console.log('------------------ db:', db);
 
-const OrmNamingStrategy = require("./orm-naming-strategy").OrmNamingStrategy;
+const OrmNamingStrategy = require('./orm-naming-strategy').OrmNamingStrategy;
 
 module.exports = {
     type: 'postgres',
