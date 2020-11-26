@@ -27,7 +27,7 @@ const production = {
         // port: 5432,
         // username: 'pguser',
         // password: 'pgpass',
-        database: 'habits-tracker-db',
+        // database: 'habits-tracker-db',
         maxQueryExecutionTime: null,
     },
 };

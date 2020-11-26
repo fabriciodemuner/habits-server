@@ -27,4 +27,6 @@ const ormconfig: ConnectionOptions = {
     namingStrategy: new OrmNamingStrategy(),
 };
 
+console.log('--------- ormconfig:', ormconfig);
+
 export default ormconfig;
