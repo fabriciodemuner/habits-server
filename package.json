@@ -15,7 +15,10 @@
     "dev2": "nodemon dist/src/main.js",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "prepush": "npm run lint -- --fix && npm run format -- -l && npm run build && npm test"
+    "prepush": "npm run lint -- --fix && npm run format -- -l && npm run build && npm test",
+    "migration:run": "npx ts-node node_modules/typeorm/cli.js migration:run -f src/db/ormconfig.ts",
+    "migration:generate": "npx ts-node node_modules/typeorm/cli.js migration:generate -f src/db/ormconfig.ts",
+    "migration:revert": "npx ts-node node_modules/typeorm/cli.js migration:revert -f src/db/ormconfig.ts"
   },
   "dependencies": {
     "@nestjs/common": "7.0.0",

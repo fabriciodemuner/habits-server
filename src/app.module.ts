@@ -4,10 +4,10 @@ import { AppRepo, repoProviders } from './common/app.repo';
 import { HabitController } from './habit/habit.controller';
 import { Habit } from './habit/habit.entity';
 import { HabitService } from './habit/habit.service';
-import * as ormconfig from './db/custom-ormconfig';
+import ormconfig from './db/ormconfig';
 
 @Module({
-    imports: [TypeOrmModule.forRoot(ormconfig as any)],
+    imports: [TypeOrmModule.forRoot(ormconfig)],
     controllers: [HabitController],
     providers: [...repoProviders([Habit]), AppRepo, HabitService],
 })

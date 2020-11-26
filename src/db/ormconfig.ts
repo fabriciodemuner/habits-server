@@ -1,18 +1,20 @@
+import { ConnectionOptions } from 'typeorm';
+import { PROD } from '../common/constants';
+
 const db = require('config').db;
 console.log('------------ db:', db);
 const OrmNamingStrategy = require('./orm-naming-strategy').OrmNamingStrategy;
 
-module.exports = {
+const ormconfig: ConnectionOptions = {
     type: 'postgres',
     schema: 'public',
-    keepConnectionAlive: true, // otherwise tests go apeshit
     host: db.host,
     port: db.port,
     username: db.username,
     password: db.password,
     url: db.url,
     database: db.database,
-    synchronize: true,
+    synchronize: !PROD,
     migrationsRun: true,
     logging: db.logging,
     maxQueryExecutionTime: db.maxQueryExecutionTime,
@@ -24,3 +26,5 @@ module.exports = {
     },
     namingStrategy: new OrmNamingStrategy(),
 };
+
+export default ormconfig;
