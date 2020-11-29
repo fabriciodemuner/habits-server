@@ -20,7 +20,7 @@ const ormconfig: ConnectionOptions = {
     maxQueryExecutionTime: db.maxQueryExecutionTime,
     entities: ['dist/**/**.entity.js'],
     // js extension is important because we run compiled files in prod
-    migrations: ['dist/db/migration/**/*.js'],
+    migrations: ['dist/db/migration/*.js'],
     cli: {
         migrationsDir: 'src/db/migration',
     },
