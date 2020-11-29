@@ -29,4 +29,4 @@ const ormconfig: ConnectionOptions = {
 
 console.log('--------- ormconfig:', ormconfig);
 
-export default ormconfig;
+export = ormconfig;
