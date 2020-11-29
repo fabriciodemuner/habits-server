@@ -12,6 +12,9 @@ export class HabitResponseDto {
     description: string;
 
     @Expose()
+    days: string[];
+
+    @Expose()
     streak: number;
 
     @Expose()
