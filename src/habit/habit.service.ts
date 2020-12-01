@@ -8,8 +8,6 @@ import { UpdateHabitRequestDto } from './dto/update-habit-request.dto';
 import { Habit } from './habit.entity';
 
 function newUTCDate(): Date {
-    // console.log(new Date(JSON.stringify(new Date()).slice(1, -2)))
-    // console.log(new Date(new Date().toUTCString().substr(0, 25)))
     return new Date(JSON.stringify(new Date()).slice(1, -2));
 }
 
@@ -54,8 +52,20 @@ export class HabitService {
         } else {
             habit.days.push(dto.date);
         }
+
+        let streak = 0;
+        const oneDay = 1000 * 60 * 60 * 24;
+        while (true) {
+            const day = JSON.stringify(new Date(new Date().valueOf() - streak * oneDay)).slice(1, 11);
+            if (habit.days.some(d => d.toString() === day)) {
+                streak++;
+            } else {
+                break;
+            }
+        }
+
         habit.days.sort();
-        habit.streak = habit.days.length;
+        habit.streak = streak;
         habit.updatedAt = newUTCDate();
         await this.habitRepo.save(habit);
         return plainToClass(HabitResponseDto, habit);
