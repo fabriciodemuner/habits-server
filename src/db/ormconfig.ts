@@ -1,5 +1,4 @@
 import { ConnectionOptions } from 'typeorm';
-import { ___PROD___ } from '../common/constants';
 import * as config from 'config';
 import { OrmNamingStrategy } from './orm-naming-strategy';
 
@@ -14,7 +13,7 @@ const ormconfig: ConnectionOptions = {
     password: db.password,
     url: db.url,
     database: db.database,
-    synchronize: !___PROD___,
+    synchronize: false,
     migrationsRun: true,
     logging: db.logging,
     maxQueryExecutionTime: db.maxQueryExecutionTime,
