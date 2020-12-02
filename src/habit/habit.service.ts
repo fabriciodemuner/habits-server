@@ -26,7 +26,9 @@ export class HabitService {
 
     async listHabits(): Promise<HabitResponseDto[]> {
         const habits = await this.habitRepo.find({ order: { id: 'ASC' } });
-        return plainToClass(HabitResponseDto, habits, { enableImplicitConversion: true });
+        return plainToClass(HabitResponseDto, habits, {
+            enableImplicitConversion: true,
+        });
     }
 
     async updateHabit(dto: UpdateHabitRequestDto): Promise<HabitResponseDto> {

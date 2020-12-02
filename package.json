@@ -15,6 +15,7 @@
     "dev2": "nodemon dist/src/main.js",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "flint": "npm run lint -- --fix && npm run format -- -l",
     "prepush": "npm run lint -- --fix && npm run format -- -l && npm run build && npm test",
     "migration:run": "npx ts-node node_modules/typeorm/cli.js migration:run -f src/db/ormconfig.ts",
     "migration:generate": "npx ts-node node_modules/typeorm/cli.js migration:generate -f src/db/ormconfig.ts",

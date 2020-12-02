@@ -1,9 +1,9 @@
 import { ConnectionOptions } from 'typeorm';
-import { PROD } from '../common/constants';
+import { ___PROD___ } from '../common/constants';
+import * as config from 'config';
+import { OrmNamingStrategy } from './orm-naming-strategy';
 
-const db = require('config').db;
-console.log('------------ db:', db);
-const OrmNamingStrategy = require('./orm-naming-strategy').OrmNamingStrategy;
+const db = config.db;
 
 const ormconfig: ConnectionOptions = {
     type: 'postgres',
@@ -14,7 +14,7 @@ const ormconfig: ConnectionOptions = {
     password: db.password,
     url: db.url,
     database: db.database,
-    synchronize: !PROD,
+    synchronize: !___PROD___,
     migrationsRun: true,
     logging: db.logging,
     maxQueryExecutionTime: db.maxQueryExecutionTime,
@@ -26,7 +26,5 @@ const ormconfig: ConnectionOptions = {
     },
     namingStrategy: new OrmNamingStrategy(),
 };
-
-console.log('--------- ormconfig:', ormconfig);
 
 export = ormconfig;

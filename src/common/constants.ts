@@ -8,4 +8,4 @@ export enum Role {
     regular_user = 'regular_user',
 }
 
-export const PROD = process.env.NODE_ENV === 'production';
+export const ___PROD___ = process.env.NODE_ENV === 'production';
