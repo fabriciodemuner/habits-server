@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const env = process.env.NODE_ENV || 'development';
 const port = process.env.PORT || 4000;
 
@@ -13,6 +15,13 @@ const development = {
         password: 'pgpass',
         database: 'habits-tracker-db',
         maxQueryExecutionTime: null,
+    },
+    auth: {
+        bcryptRounds: 10,
+        accessJwtSecret: process.env.ACCESS_JWT_SECRET,
+        refreshJwtSecret: process.env.REFRESH_JWT_SECRET,
+        accessTokenExpiresIn: 60 * 60,
+        refreshTokenExpiresIn: 60 * 60 * 24 * 7,
     },
 };
 
