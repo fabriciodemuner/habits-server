@@ -1,6 +1,6 @@
 import { Exclude, Expose } from 'class-transformer';
 import { IsEmail, IsString } from 'class-validator';
-import { IsStrongPassword } from '../isStrongPassword';
+import { IsStrongPassword } from './isStrongPassword';
 
 @Exclude()
 export class RegisterRequestDto {
