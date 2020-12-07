@@ -18,8 +18,7 @@ const development = {
     },
     auth: {
         bcryptRounds: 10,
-        accessJwtSecret: process.env.ACCESS_JWT_SECRET,
-        refreshJwtSecret: process.env.REFRESH_JWT_SECRET,
+        jwtSecret: process.env.JWT_SECRET,
         accessTokenExpiresIn: 60 * 60,
         refreshTokenExpiresIn: 60 * 60 * 24 * 7,
     },
@@ -41,8 +40,7 @@ const production = {
     },
     auth: {
         bcryptRounds: 10,
-        accessJwtSecret: process.env.ACCESS_JWT_SECRET,
-        refreshJwtSecret: process.env.REFRESH_JWT_SECRET,
+        jwtSecret: process.env.JWT_SECRET,
         accessTokenExpiresIn: 60 * 60,
         refreshTokenExpiresIn: 60 * 60 * 24 * 7,
     },

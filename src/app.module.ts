@@ -10,10 +10,21 @@ import { UserController } from './user/user.controller';
 import { UserService } from './user/user.service';
 import { AuthController } from './auth/auth.controller';
 import { AuthService } from './auth/auth.service';
+import { JwtStrategy } from './auth/jwt.strategy';
+import { AppGuard } from './auth/app.guard';
+import { APP_GUARD } from '@nestjs/core';
 
 @Module({
     imports: [TypeOrmModule.forRoot(ormconfig as any)],
     controllers: [HabitController, UserController, AuthController],
-    providers: [...repoProviders([Habit, User]), AppRepo, HabitService, UserService, AuthService],
+    providers: [
+        { provide: APP_GUARD, useClass: AppGuard },
+        ...repoProviders([Habit, User]),
+        AppRepo,
+        HabitService,
+        UserService,
+        AuthService,
+        JwtStrategy,
+    ],
 })
 export class AppModule {}

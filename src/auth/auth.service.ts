@@ -1,4 +1,4 @@
-import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
+import { Inject, Injectable, UnauthorizedException, UnprocessableEntityException } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { plainToClass } from 'class-transformer';
 import * as config from 'config';
@@ -9,6 +9,8 @@ import { LoginResponseDto } from './dto/login.response.dto';
 import { RegisterRequestDto } from './dto/register.request.dto';
 import { User } from '../user/user.entity';
 import { UserService } from '../user/user.service';
+import { JwtPayload } from './jwt.strategy';
+import * as _ from 'lodash';
 
 @Injectable()
 export class AuthService {
@@ -50,7 +52,7 @@ export class AuthService {
     }
 
     public generateTokenFromUser(payload: User, tokenType: 'access' | 'refresh'): string {
-        const jwtSecret = config.get(`auth.${tokenType}JwtSecret`);
+        const jwtSecret = config.get('auth.jwtSecret');
         const expiresIn = config.get(`auth.${tokenType}TokenExpiresIn`);
 
         return jwt.sign(this.prepareUserForToken(payload), jwtSecret, { expiresIn });
@@ -62,5 +64,12 @@ export class AuthService {
             name: user.name,
             active: user.active,
         };
+    }
+
+    async validateUser(payload: JwtPayload): Promise<User> {
+        if (_.isEmpty(payload) || !payload.email) {
+            throw new UnprocessableEntityException('No email given');
+        }
+        return this.userRepo.findOne({ email: payload.email });
     }
 }
