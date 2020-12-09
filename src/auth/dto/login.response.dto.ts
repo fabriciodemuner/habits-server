@@ -6,6 +6,9 @@ export class LoginResponseDto {
     id: number;
 
     @Expose()
+    name: string;
+
+    @Expose()
     accessToken: string;
 
     @Expose()

@@ -41,7 +41,7 @@ export class AuthService {
         const refreshToken = this.generateTokenFromUser(user, 'refresh');
 
         return plainToClass(LoginResponseDto, {
-            id: user.id,
+            ...user,
             accessToken,
             refreshToken,
         });
