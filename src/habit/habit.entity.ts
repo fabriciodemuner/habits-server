@@ -1,4 +1,5 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { User } from '../user/user.entity';
 
 @Entity()
 export class Habit {
@@ -16,6 +17,9 @@ export class Habit {
 
     @Column({ type: 'json', default: [] })
     days: Date[];
+
+    @ManyToOne(() => User, { nullable: false, cascade: true, onDelete: 'SET NULL' })
+    user: User;
 
     @CreateDateColumn()
     createdAt: Date;

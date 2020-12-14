@@ -1,5 +1,5 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
-import { Permissions } from '../auth/app.guard';
+import { Body, Controller, Delete, Get, Param, Post, Put, Req } from '@nestjs/common';
+import { ApiLoginRequest, Permissions } from '../auth/app.guard';
 import { CreateHabitRequestDto } from './dto/create-habit-request.dto';
 import { HabitResponseDto } from './dto/habit-response.dto';
 import { UpdateDaysRequestDto } from './dto/update-days-request.dto';
@@ -11,15 +11,13 @@ export class HabitController {
     constructor(private habitService: HabitService) {}
 
     @Post()
-    @Permissions({ public: true })
-    async createHabit(@Body() dto: CreateHabitRequestDto): Promise<HabitResponseDto> {
-        return await this.habitService.createHabit(dto);
+    async createHabit(@Body() dto: CreateHabitRequestDto, @Req() req: ApiLoginRequest): Promise<HabitResponseDto> {
+        return await this.habitService.createHabit(dto, req);
     }
 
     @Get()
-    @Permissions({ public: true })
-    async listHabits(): Promise<HabitResponseDto[]> {
-        return await this.habitService.listHabits();
+    async listHabits(@Req() req: ApiLoginRequest): Promise<HabitResponseDto[]> {
+        return await this.habitService.listHabits(req.user);
     }
 
     @Put(':id')

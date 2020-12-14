@@ -1,5 +1,7 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
+import { ApiLoginRequest } from '../auth/app.guard';
 import { plainToClass } from 'class-transformer';
+import { User } from '../user/user.entity';
 import { AppRepo, InjectRepo } from '../common/app.repo';
 import { CreateHabitRequestDto } from './dto/create-habit-request.dto';
 import { HabitResponseDto } from './dto/habit-response.dto';
@@ -15,8 +17,10 @@ function newUTCDate(): Date {
 export class HabitService {
     constructor(@InjectRepo(Habit) private habitRepo: AppRepo<Habit>) {}
 
-    async createHabit(dto: CreateHabitRequestDto): Promise<HabitResponseDto> {
+    async createHabit(dto: CreateHabitRequestDto, req: ApiLoginRequest): Promise<HabitResponseDto> {
+        if (!req.user) throw new UnauthorizedException('User is not logged in');
         const habit = new Habit();
+        habit.user = req.user;
         habit.name = dto.name;
         habit.description = dto.description;
 
@@ -24,8 +28,8 @@ export class HabitService {
         return plainToClass(HabitResponseDto, habit);
     }
 
-    async listHabits(): Promise<HabitResponseDto[]> {
-        const habits = await this.habitRepo.find({ order: { id: 'ASC' } });
+    async listHabits(user: User): Promise<HabitResponseDto[]> {
+        const habits = await this.habitRepo.find({ where: { user }, order: { createdAt: 'ASC' }, relations: ['user'] });
         return plainToClass(HabitResponseDto, habits, {
             enableImplicitConversion: true,
         });
