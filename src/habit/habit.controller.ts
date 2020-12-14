@@ -20,21 +20,27 @@ export class HabitController {
         return await this.habitService.listHabits(req.user);
     }
 
-    @Put(':id')
-    @Permissions({ public: true })
-    async updateHabit(@Param('id') id: number, @Body() dto: UpdateHabitRequestDto): Promise<HabitResponseDto> {
-        return await this.habitService.updateHabit({ id, ...dto });
+    @Put(':habitId')
+    @Permissions({
+        resource: 'Habit',
+    })
+    async updateHabit(@Param('habitId') habitId: number, @Body() dto: UpdateHabitRequestDto): Promise<HabitResponseDto> {
+        return await this.habitService.updateHabit({ id: habitId, ...dto });
     }
 
-    @Put(':id/days')
-    @Permissions({ public: true })
-    async updateDays(@Param('id') id: number, @Body() dto: UpdateDaysRequestDto): Promise<HabitResponseDto> {
-        return await this.habitService.updateDays({ id, ...dto });
+    @Put(':habitId/days')
+    @Permissions({
+        resource: 'Habit',
+    })
+    async updateDays(@Param('habitId') habitId: number, @Body() dto: UpdateDaysRequestDto): Promise<HabitResponseDto> {
+        return await this.habitService.updateDays({ id: habitId, ...dto });
     }
 
-    @Delete(':id')
-    @Permissions({ public: true })
-    async deleteHabit(@Param('id') id: number): Promise<boolean> {
-        return await this.habitService.deleteHabit(id);
+    @Delete(':habitId')
+    @Permissions({
+        resource: 'Habit',
+    })
+    async deleteHabit(@Param('habitId') habitId: number): Promise<boolean> {
+        return await this.habitService.deleteHabit(habitId);
     }
 }

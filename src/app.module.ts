@@ -13,6 +13,7 @@ import { AuthService } from './auth/auth.service';
 import { JwtStrategy } from './auth/jwt.strategy';
 import { AppGuard } from './auth/app.guard';
 import { APP_GUARD } from '@nestjs/core';
+import { AuthorizationService } from './auth/authorization.service';
 
 @Module({
     imports: [TypeOrmModule.forRoot(ormconfig as any)],
@@ -24,6 +25,7 @@ import { APP_GUARD } from '@nestjs/core';
         HabitService,
         UserService,
         AuthService,
+        AuthorizationService,
         JwtStrategy,
     ],
 })
