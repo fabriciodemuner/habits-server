@@ -1,9 +1,10 @@
-import { Body, Controller, Get, HttpCode, HttpStatus, Post, Request } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, HttpStatus, Post, Req } from '@nestjs/common';
+import { Permissions } from './app.guard';
+import { AuthService } from './auth.service';
+import { ChangePasswordDto } from './dto/change.password.dto';
 import { LoginRequestDto } from './dto/login.request.dto';
 import { LoginResponseDto } from './dto/login.response.dto';
 import { RegisterRequestDto } from './dto/register.request.dto';
-import { AuthService } from './auth.service';
-import { Permissions } from './app.guard';
 
 @Controller('auth')
 export class AuthController {
@@ -23,8 +24,14 @@ export class AuthController {
         return await this.authService.register(dto);
     }
 
+    @Post('/change-password')
+    @HttpCode(HttpStatus.OK)
+    public async changePassword(@Req() req, @Body() dto: ChangePasswordDto): Promise<boolean> {
+        return await this.authService.changePassword(req.user.id, dto);
+    }
+
     @Get('/profile')
-    getProfile(@Request() req) {
+    getProfile(@Req() req) {
         return req.user;
     }
 }

@@ -3,14 +3,15 @@ import * as bcrypt from 'bcrypt';
 import { plainToClass } from 'class-transformer';
 import * as config from 'config';
 import * as jwt from 'jsonwebtoken';
+import * as _ from 'lodash';
 import { AppRepo, InjectRepo } from '../common/app.repo';
+import { User } from '../user/user.entity';
+import { UserService } from '../user/user.service';
+import { ChangePasswordDto } from './dto/change.password.dto';
 import { LoginRequestDto } from './dto/login.request.dto';
 import { LoginResponseDto } from './dto/login.response.dto';
 import { RegisterRequestDto } from './dto/register.request.dto';
-import { User } from '../user/user.entity';
-import { UserService } from '../user/user.service';
 import { JwtPayload } from './jwt.strategy';
-import * as _ from 'lodash';
 
 @Injectable()
 export class AuthService {
@@ -34,6 +35,17 @@ export class AuthService {
         user.lastLogin = new Date();
         await this.userRepo.save(user);
         return this.createToken(user);
+    }
+
+    async changePassword(userId: number, dto: ChangePasswordDto): Promise<boolean> {
+        const user = await this.userRepo.findOne(userId);
+        const passwordEqual = await bcrypt.compare(dto.currentPassword, user.password);
+        if (!passwordEqual) {
+            throw new UnprocessableEntityException('Current password does not match.');
+        }
+        user.password = await this.hashPassword(dto.newPassword);
+        await this.userRepo.save(user);
+        return true;
     }
 
     public createToken(user: User): LoginResponseDto {
