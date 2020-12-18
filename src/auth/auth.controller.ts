@@ -4,6 +4,8 @@ import { AuthService } from './auth.service';
 import { ChangePasswordDto } from './dto/change.password.dto';
 import { LoginRequestDto } from './dto/login.request.dto';
 import { LoginResponseDto } from './dto/login.response.dto';
+import { RefreshTokenRequestDto } from './dto/refresh-token.request.dto';
+import { RefreshTokenResponseDto } from './dto/refresh-token.response.dto';
 import { RegisterRequestDto } from './dto/register.request.dto';
 
 @Controller('auth')
@@ -28,6 +30,13 @@ export class AuthController {
     @HttpCode(HttpStatus.OK)
     public async changePassword(@Req() req, @Body() dto: ChangePasswordDto): Promise<boolean> {
         return await this.authService.changePassword(req.user.id, dto);
+    }
+
+    @Post('/refresh-token')
+    @Permissions({ public: true })
+    @HttpCode(HttpStatus.OK)
+    public async refreshToken(@Body() dto: RefreshTokenRequestDto): Promise<RefreshTokenResponseDto> {
+        return await this.authService.refreshToken(dto);
     }
 
     @Get('/profile')

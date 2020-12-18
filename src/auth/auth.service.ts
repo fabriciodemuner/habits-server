@@ -10,6 +10,8 @@ import { UserService } from '../user/user.service';
 import { ChangePasswordDto } from './dto/change.password.dto';
 import { LoginRequestDto } from './dto/login.request.dto';
 import { LoginResponseDto } from './dto/login.response.dto';
+import { RefreshTokenRequestDto } from './dto/refresh-token.request.dto';
+import { RefreshTokenResponseDto } from './dto/refresh-token.response.dto';
 import { RegisterRequestDto } from './dto/register.request.dto';
 import { JwtPayload } from './jwt.strategy';
 
@@ -56,6 +58,31 @@ export class AuthService {
             ...user,
             accessToken,
             refreshToken,
+        });
+    }
+
+    async refreshToken(dto: RefreshTokenRequestDto): Promise<RefreshTokenResponseDto> {
+        console.log('refreshing token');
+        const signedUser = await this.decodeToken(dto.refreshToken);
+        if (!signedUser) {
+            throw new UnauthorizedException('Invalid token');
+        }
+        const user = await this.validateUser(signedUser);
+        if (!user) {
+            throw new UnauthorizedException('Invalid token');
+        }
+        return { accessToken: this.generateTokenFromUser(user, 'access') };
+    }
+
+    private async decodeToken(token): Promise<any> {
+        return await new Promise(resolve => {
+            jwt.verify(token, config.get('auth.jwtSecret'), (err, decoded) => {
+                if (err) {
+                    console.log('cant refresh token');
+                    return resolve(null);
+                }
+                return resolve({ email: decoded.email });
+            });
         });
     }
 
