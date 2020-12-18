@@ -18,6 +18,9 @@ export async function configureApp(app: NestExpressApplication) {
         }),
     );
 
+    // REST api: prefix with /api
+    app.setGlobalPrefix('api');
+
     app.useGlobalPipes(new DtoPipe());
 
     // REST api: filter to log exceptions
