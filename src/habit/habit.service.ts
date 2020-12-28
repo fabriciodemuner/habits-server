@@ -58,20 +58,10 @@ export class HabitService {
         } else {
             habit.days.push(dto.date);
         }
-
-        let streak = 0;
-        const oneDay = 1000 * 60 * 60 * 24;
-        while (true) {
-            const day = JSON.stringify(new Date(new Date().valueOf() - streak * oneDay)).slice(1, 11);
-            if (habit.days.some(d => d.toString() === day)) {
-                streak++;
-            } else {
-                break;
-            }
-        }
-
-        habit.days.sort();
-        habit.streak = streak;
+        habit.days.sort((a, b) => {
+            if (a > b) return -1;
+            return 1;
+        });
         habit.updatedAt = newUTCDate();
         await this.habitRepo.save(habit);
         return plainToClass(HabitResponseDto, habit);

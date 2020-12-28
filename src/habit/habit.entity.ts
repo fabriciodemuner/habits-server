@@ -12,9 +12,6 @@ export class Habit {
     @Column()
     description: string;
 
-    @Column({ type: 'integer', default: 0 })
-    streak: number;
-
     @Column({ type: 'json', default: [] })
     days: Date[];
 
