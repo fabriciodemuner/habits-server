@@ -26,8 +26,6 @@ export class AuthorizationService {
     private async getResourceOwner(req: ApiRequest, resource: ResourcePair): Promise<User> {
         const [entityType, routeParam] = resource;
         const id = req.params[routeParam];
-
-        console.log(entityType, routeParam, id);
         if (entityType === 'Habit') {
             return (
                 await this.habitRepo.findOneOrFail({

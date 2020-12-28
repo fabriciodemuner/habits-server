@@ -62,7 +62,6 @@ export class AuthService {
     }
 
     async refreshToken(dto: RefreshTokenRequestDto): Promise<RefreshTokenResponseDto> {
-        console.log('refreshing token');
         const signedUser = await this.decodeToken(dto.refreshToken);
         if (!signedUser) {
             throw new UnauthorizedException('Invalid token');
@@ -78,7 +77,6 @@ export class AuthService {
         return await new Promise(resolve => {
             jwt.verify(token, config.get('auth.jwtSecret'), (err, decoded) => {
                 if (err) {
-                    console.log('cant refresh token');
                     return resolve(null);
                 }
                 return resolve({ email: decoded.email });
